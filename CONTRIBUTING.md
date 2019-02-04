@@ -20,4 +20,3 @@ Before you get started, please read these guidelines.
 8. Add your changed files with `git add -A`, then create a new commit with `git commit` and include a short, descriptive commit message.
 9. Push your changes to your fork with `git push origin your_branch_name`.
 10. Create a pull request.
-
