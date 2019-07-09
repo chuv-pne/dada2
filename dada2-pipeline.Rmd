@@ -444,9 +444,9 @@ seqtab.nochim <- readRDS("data/seqtab_nochim.rds")
 track.plots <- foreach(i=1:length(runs), .packages = c("ggplot2", "reshape2")) %do% {
   filtering <- readRDS(file.path(runs.dirs[i], "filtering_report.rds"))
   row.names(filtering) <- gsub("-R1.fastq", "", row.names(filtering))
-  track <- cbind(filtering,
-                 rowSums(seqtab[row.names(filtering), ]),
-                 rowSums(seqtab.nochim[row.names(filtering), ]))
+  track <- cbind(filtering[row.names(filtering) %in% row.names(seqtab)],
+                 rowSums(seqtab[row.names(seqtab) %in% row.names(filtering), ]),
+                 rowSums(seqtab.nochim[row.names(seqtab.nochim) %in% row.names(filtering), ]))
   colnames(track) <- c("Input", "Filtered", "Merged", "Non chimeric")
   for (j in (ncol(track)-1):1) {
     for (k in (j+1):ncol(track)) {
