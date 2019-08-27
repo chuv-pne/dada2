@@ -68,6 +68,7 @@ Distribution of computation over multiple computing cores (parallelization) will
 packrat::set_opts(use.cache=FALSE)
 packrat::restore()
 # Make sure that the packrat library path is correct. If needed, edit the `.libPaths` command accordingly.
+
 .libPaths(file.path("packrat", list.files("packrat", pattern = "lib"),
                     version$platform,
                     paste(version$major, version$minor, sep=".")))
@@ -450,10 +451,10 @@ track.plots <- foreach(i=1:length(runs), .packages = c("ggplot2", "reshape2")) %
   i <- 1
   filtering <- readRDS(file.path(runs.dirs[i], "filtering_report.rds"))
   row.names(filtering) <- gsub("-R1.fastq", "", row.names(filtering))
+
   track <- cbind(filtering[row.names(filtering) %in% row.names(seqtab), ],
                  rowSums(seqtab[row.names(seqtab) %in% row.names(filtering), ]),
                  rowSums(seqtab.nochim[row.names(seqtab.nochim) %in% row.names(filtering), ]))
-  head(track)
   colnames(track) <- c("Input", "Filtered", "Merged", "Non chimeric")
   for (j in (ncol(track)-1):1) {
     for (k in (j+1):ncol(track)) {
